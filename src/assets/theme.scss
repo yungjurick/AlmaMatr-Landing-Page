@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Bree+Serif|Open+Sans');
+
+// Global Style
+$font_main: 'Bree Serif', serif;
+$font_secondary: 'Open Sans', sans-serif;
+$primary_font: #414141;
+$primary_color: #50E3C2;
+
+/* Unit View Port Size based on Artboard - Desktop (Responsive)*/
+$unit_height: 100vh / 700;
+$unit_width: 100vw / 1200;
+
+/* Initial Style Settings */
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+html {
+  font-size: 5px;
+}
+body {
+  font: 100% $font_main;
+}
