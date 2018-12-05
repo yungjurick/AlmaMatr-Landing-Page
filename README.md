@@ -1,4 +1,6 @@
-# almamatr-landing-page
+# AlmaMatr Landing Page
+
+A Landing Page for AlmaMatr, n social application that connects you with your university alumni.
 
 ## Project setup
 ```
