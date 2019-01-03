@@ -1,120 +1,25 @@
 <template>
-  <section class="main-view">
-    <div class="bg-shape"/>
-    <tool-bar />
-    <div class="main-content-container">
-      <div class="main-content-left">
-        <h1 class="content-top">
-          Turn your university<br>
-          network into community
-        </h1>
-        <p class="content-bottom">
-          Find alumni from your university in any city and connect at the<br>
-          click of a button. Socialize, network & grow together with your<br>
-          alma mater.
-        </p>
-        <div class="email-input">
-          <input type="text" placeholder="Enter your email...">
-          <a href="https://www.google.com">
-            <img class="email-image" src="@/assets/envelope-regular.svg" alt="email">
-          </a>
-        </div>
-      </div>
-      <div class="main-content-right">
-        <img class="phone-image" src="@/assets/iphone-image.png" alt="phone-image">
-      </div>
-    </div>
-  </section>
+  <div id="app">
+    <router-view/>
+  </div>
 </template>
 
-<script>
-import ToolBar from './components/ToolBar.vue';
-
-export default {
-  name: 'App',
-  components: {
-    ToolBar
+<style>
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
   }
-};
-</script>
-
-<style lang="scss">
-@import './assets/theme.scss';
-.main-view {
-  height: 100vh;
-  width: 100vw;
-}
-.bg-shape {
-  position: absolute;
-  background: url('./assets/bg-polygon.svg');
-  background-size: cover;
-  height: 100vh;
-  width: 55vw;
-  top: 0;
-  right: 0;
-  z-index: -1;
-}
-.main-content-container {
-  display: flex;
-  height: 100%;
-  padding: 0 (79.9 * $unit_width);
-  .main-content-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: $primary_font;
-    .content-top {
-      font-size: 9rem;
-      font-weight: 400;
-      text-align: left;
-      line-height: 12rem;
-      margin-bottom: 20 * $unit_height;
-    }
-    .content-bottom {
-      font: 100% $font_secondary;
-      font-size: 4rem;
-      font-weight: 300;
-      text-align: left;
-      line-height: 5rem;
-      margin-bottom: 67 * $unit_height;
-    }
-    .email-input {
-      width: 299px;
-      height: 55px;
-      box-shadow: 2px 6px 10px 0 rgba(0, 0, 0, 0.24);
-      border-radius: 23px;
-      display: flex;
-      align-items: center;
-      input {
-        flex: 1 1 100%;
-        font-size: 3rem;
-        height: 40%;
-        margin-left: 8%;
-        &::placeholder {
-          font-size: 17px;
-        }
-        &:focus {
-          outline: none;
-        }
-      }
-      .email-image {
-        background-color: $primary_color;
-        height: 30px;
-        width: 30px;
-        padding: 13px;
-        border-radius: 23px;
-        fill: white;
-      }
-    }
+  #nav {
+    padding: 30px;
   }
-  .main-content-right {
-    display: flex;
-    align-items: center;
-    margin-left: 132 * $unit_width;
-    .phone-image {
-      height: 522;
-      width: 254;
-    }
+  #nav a {
+    font-weight: bold;
+    color: #2c3e50;
   }
-}
+  #nav a.router-link-exact-active {
+    color: #42b983;
+  }
 </style>
