@@ -1,111 +1,73 @@
 <template>
   <section class="main-view">
-    <div class="bg-shape"/>
+    <div class="bg-image" />
     <ToolBar />
-    <div class="main-content-container">
-      <div class="main-content-left">
-        <h1 class="content-top">
-          Turn your university network into community
-        </h1>
-        <!-- <div class="email-input">
-          <input type="text" placeholder="Enter your email...">
-          <a href="https://www.google.com">
-            <img class="email-image" src="@/assets/envelope-regular.svg" alt="email">
-          </a>
-        </div> -->
-      </div>
-    </div>
+    <h1 class="heading">Turn your university network into community</h1>
+    <b-container>
+      <b-row>
+        <div style="width: 400px;">
+          <SearchBox />
+        </div>
+      </b-row>
+    </b-container> 
   </section>
 </template>
 
 <script>
 import ToolBar from './ToolBar.vue';
+import SearchBox from './SearchBox.vue'
 
 export default {
   name: 'HomePage',
   components: {
-    ToolBar
+    ToolBar,
+    SearchBox
   }
 };
 </script>
 
 <style lang="scss">
+
 @import '../assets/theme.scss';
+
 .main-view {
   height: 100vh;
   width: 100vw;
 }
 .bg-shape {
   position: absolute;
-  //background: url('./assets/bg-polygon.svg');
+  background: url('../assets/background.jpg');
   background-size: cover;
   height: 100vh;
-  width: 55vw;
+  width: 100vw;
   top: 0;
-  right: 0;
+  left: 0;
   z-index: -1;
 }
-.main-content-container {
-  display: flex;
-  height: 100%;
-  padding: 0 (79.9 * $unit_width);
-  .main-content-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: $primary_font;
-    .content-top {
-      font-size: 2rem;
-      font-weight: 400;
-      text-align: left;
-      line-height: 12rem;
-      margin-bottom: 20 * $unit_height;
-    }
-    .content-bottom {
-      font: 100% $font_secondary;
-      font-size: 4rem;
-      font-weight: 300;
-      text-align: left;
-      line-height: 5rem;
-      margin-bottom: 67 * $unit_height;
-    }
-    .email-input {
-      width: 299px;
-      height: 55px;
-      box-shadow: 2px 6px 10px 0 rgba(0, 0, 0, 0.24);
-      border-radius: 23px;
-      display: flex;
-      align-items: center;
-      input {
-        flex: 1 1 100%;
-        font-size: 3rem;
-        height: 40%;
-        margin-left: 8%;
-        &::placeholder {
-          font-size: 17px;
-        }
-        &:focus {
-          outline: none;
-        }
-      }
-      .email-image {
-        background-color: $primary_color;
-        height: 30px;
-        width: 30px;
-        padding: 13px;
-        border-radius: 23px;
-        fill: white;
-      }
-    }
-  }
-  .main-content-right {
-    display: flex;
-    align-items: center;
-    margin-left: 132 * $unit_width;
-    .phone-image {
-      height: 522;
-      width: 254;
-    }
-  }
+.bg-image {
+    position: absolute;
+    background: url('../assets/background.jpg');
+    height: 100vh;
+    width: 100vw;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
 }
+.bg-image:after {
+    content:'\A';
+    position:absolute;
+    width:100%; height:100%;
+    top:0; left:0;
+    background: black;
+    opacity: 0.1989397321428572;
+}
+.heading {
+  color: white;
+  font-family: $font_main;
+  margin-top: 45px;
+  margin-left: 65px;
+  margin-bottom: 45px;
+}
+
 </style>
