@@ -6,8 +6,15 @@ import store from './store'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 Vue.use(BootstrapVue)
+Vue.use(Loading, {
+  loader: 'dots',
+  color: '#fffcfe',
+  backgroundColor: '#505050'
+})
 
 Vue.config.productionTip = false
 
@@ -23,7 +30,11 @@ const initialize = () => {
   }
 };
 
-firebase.auth().onAuthStateChanged((user) => {
-  store.commit('setCurrentUser', user);
-  initialize();
+firebase.auth().onAuthStateChanged((firebaseUser) => {
+	if(firebaseUser) {
+		store.dispatch('autoSignIn', firebaseUser)
+	} else {
+		store.dispatch('setUser', null)
+	}
+	initialize();
 });

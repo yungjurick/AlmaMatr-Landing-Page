@@ -1,6 +1,6 @@
 <template>
   <div class="search-form">
-    <b-form @submit="onSubmit" v-if="show">
+    <b-form @submit="onSubmit">
 
       <b-form-row style="margin-bottom: 18px;">
         <b-col class="form-heading">
@@ -23,6 +23,7 @@
                     label="CITY"
                     label-for="exampleInput2">
         <b-form-input id="exampleInput2"
+                      ref="autocomplete"
                       type="text"
                       v-model="form.city"
                       required
@@ -63,6 +64,21 @@
 <script>
   export default {
     name: 'SearchBox',
+    mounted() {
+      this.autocomplete = new google.maps.places.Autocomplete(
+        (this.$refs.autocomplete.$refs.input), { types: ['geocode'] }
+      );
+
+      this.autocomplete.addListener('place_changed', () => {
+        let place = this.autocomplete.getPlace();
+        let ac = place.address_components;
+        let lat = place.geometry.location.lat();
+        let lon = place.geometry.location.lng();
+        let city = ac[0]["short_name"];
+        
+        console.log(`The user picked ${city} with the coordinates ${lat}, ${lon}`);
+      });
+    },
     data () {
       return {
         form: {
@@ -73,7 +89,7 @@
         },
         gradType: [
           { text: 'Select type', value: null },
-          'Alumni', 'Current Student', 'Faculty'
+          'Alumni', 'Current Student'
         ],
         gradClass: [
           { text: 'Class', value: null },

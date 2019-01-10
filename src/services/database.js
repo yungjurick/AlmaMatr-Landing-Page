@@ -15,15 +15,41 @@ const database = firebase.initializeApp(config);
 
 database.signIn = async () => {
 	try {
+		store.commit('setLoading', true)
+
 		const provider = new firebase.auth.GoogleAuthProvider();
 
-		await firebase.auth().signInWithPopup(provider);
+		let result = await firebase.auth().signInWithPopup(provider);
+		let firebaseUser = firebase.auth().currentUser
 
-		store.commit('currentUser', firebase.auth().currentUser);
+		if (result.additionalUserInfo.isNewUser) {
+			const user = {
+				id: firebaseUser.uid,
+				name: firebaseUser.displayName,
+				email: firebaseUser.email,
+				school: null,
+				class: null,
+				location: null,
+				vocation: null,
+				bio: null,
+				imageUrl: firebaseUser.photoURL
+			}
+			database.database().ref('users/' + firebaseUser.uid).set(user)
+				.then(() => {
+					store.dispatch('setUser', user)
+					store.commit('setLoading', false)
+					console.log("New User Made!")
+				})
+				.catch((error) => {
+					store.commit('setLoading', false)
+					console.log(error)
+				})
+		}
 
 		return true;
 
 	} catch(error) {
+		store.commit('setLoading', false)
 		return error;
 	}
 }
@@ -32,7 +58,7 @@ database.signOut = async () => {
 	try {
 		await firebase.auth().signOut();
 
-		store.commit('currentUser', null);
+		store.dispatch('logout');
 
 		return true;
 

@@ -2,26 +2,64 @@
   <section class="main-view">
     <div class="bg-image" />
     <ToolBar />
-    <h1 class="heading">Turn your university network into community</h1>
+
+    <h1 v-if="!currentUser" class="heading">Turn your university network into community</h1>
+    <h1 v-else class="heading">Welcome, {{ currentUser.name }}!</h1>
+
     <b-container>
       <b-row>
         <div style="width: 400px;">
           <SearchBox />
         </div>
       </b-row>
-    </b-container> 
+    </b-container>
+
+    <EditProfile v-if="isEditingProfile" />
+
   </section>
 </template>
 
 <script>
 import ToolBar from './ToolBar.vue';
-import SearchBox from './SearchBox.vue'
+import SearchBox from './SearchBox.vue';
+import EditProfile from './EditProfile.vue';
 
 export default {
   name: 'HomePage',
+  data() {
+    return {
+      loader: null
+    }
+  },
+  mounted() {
+    if(this.isLoading) {
+      this.loader = this.$loading.show()
+    }
+  },
   components: {
     ToolBar,
-    SearchBox
+    SearchBox,
+    EditProfile
+  },
+  computed: {
+    currentUser() {
+      return this.$store.getters.user;
+    },
+    isEditingProfile() {
+      return this.$store.getters.editProfile;
+    },
+    isLoading() {
+      return this.$store.getters.loading;
+    }
+  },
+  watch: {
+    isLoading(val) {
+      if(val === false) {
+        this.loader.hide()
+      } else {
+        this.loader = this.$loading.show()
+      }
+    }
   }
 };
 </script>
@@ -33,16 +71,6 @@ export default {
 .main-view {
   height: 100vh;
   width: 100vw;
-}
-.bg-shape {
-  position: absolute;
-  background: url('../assets/background.jpg');
-  background-size: cover;
-  height: 100vh;
-  width: 100vw;
-  top: 0;
-  left: 0;
-  z-index: -1;
 }
 .bg-image {
     position: absolute;

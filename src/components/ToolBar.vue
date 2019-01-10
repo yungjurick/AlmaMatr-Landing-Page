@@ -30,7 +30,15 @@
         <template v-else>
           <b-nav-item href="#">Inbox</b-nav-item>
           <b-nav-item href="#">Connects</b-nav-item>
-          <b-nav-item @click="logout" href="#">Log out</b-nav-item>
+          <b-nav-item href="#" class="profile_image">
+            <b-dropdown variant="link" offset="-120" no-caret>
+              <template slot="button-content">
+                <img :src="currentUser.imageUrl" style="width: 35px; height: 35px; border-radius: 50%; border: 1px solid white;">
+              </template>
+              <b-dropdown-item @click="toggleProfileEdit" href="#">Profile</b-dropdown-item>
+              <b-dropdown-item @click="logout" href="#">Logout</b-dropdown-item>
+            </b-dropdown>
+          </b-nav-item>
         </template>
 
       </b-navbar-nav>
@@ -40,8 +48,8 @@
 </template>
 
 <script>
-  import firebase from 'firebase'
   import database from '@/services/database'
+  //import store from '@/store'
 
   export default {
     name: 'ToolBar',
@@ -52,23 +60,31 @@
     },
     computed: {
       currentUser() {
-        return this.$store.state.currentUser;
+        return this.$store.getters.user;
       }
     },
     methods: {
       async googleLogin() {
+
+        let loader = this.$loading.show();
+
         let result = await database.signIn();
         if (result.message) {
           this.error = result.message;
-        } else {
-          console.log("User signed in successfull.");
+          console.log(this.error)
         }
-
+        loader.hide();
       },
-      logout: function() {
-        firebase.auth().signOut().then(() => {
-          this.$router.replace('login')
-        })
+      async logout() {
+        let loader = this.$loading.show();
+        await database.signOut();
+
+        setTimeout(() => {
+          loader.hide()
+        }, 500)
+      },
+      toggleProfileEdit() {
+        this.$store.dispatch('setEditProfile', true)
       }
     }
   };
@@ -85,9 +101,22 @@
   font-size: 16px;
   font-family: $font_secondary;
 
+  .navbar-nav .profile_image a.nav-link {
+    padding: 0;
+  }
+
   .navbar-nav .nav-link {
     color: white;
   }
 
 }
+
+.navbar-nav .profile_image a.nav-link .dropdown .dropdown-menu {
+  background-color: #000;
+
+  // .dropdown-item{
+  //   color: #fff;
+  // }
+}
+
 </style>
