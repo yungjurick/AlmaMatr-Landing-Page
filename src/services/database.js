@@ -27,11 +27,6 @@ database.signIn = async () => {
 				id: firebaseUser.uid,
 				name: firebaseUser.displayName,
 				email: firebaseUser.email,
-				school: null,
-				class: null,
-				location: null,
-				vocation: null,
-				bio: null,
 				imageUrl: firebaseUser.photoURL
 			}
 			database.database().ref('users/' + firebaseUser.uid).set(user)

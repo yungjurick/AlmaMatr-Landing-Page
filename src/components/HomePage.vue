@@ -1,4 +1,26 @@
 <template>
+
+<!--   <full-page ref="fullpage" :options="options" id="fullpage">
+    <div class="section">
+      <div class="bg-image" />
+      <ToolBar />
+
+      <h1 v-if="!currentUser" class="heading">Turn your university network into community</h1>
+      <h1 v-else class="heading">Welcome, {{ currentUser.name }}!</h1>
+
+      <b-container>
+        <b-row>
+          <div style="width: 400px;">
+            <SearchBox />
+          </div>
+        </b-row>
+      </b-container>
+    </div>
+    <div class="section">
+      Second section ...
+    </div>
+  </full-page> -->
+
   <section class="main-view">
     <div class="bg-image" />
     <ToolBar />

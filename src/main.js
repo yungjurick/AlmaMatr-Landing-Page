@@ -7,7 +7,10 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/vue-loading.css';
+import 'vue-loading-overlay/dist/vue-loading.css'
+//import 'fullpage.js/vendors/scrolloverflow' // Optional. When using scrollOverflow:true
+//import './fullpage.scrollHorizontally.min' // Optional. When using fullpage extensions
+//import VueFullPage from 'vue-fullpage.js'
 
 Vue.use(BootstrapVue)
 Vue.use(Loading, {
@@ -15,6 +18,7 @@ Vue.use(Loading, {
   color: '#fffcfe',
   backgroundColor: '#505050'
 })
+//Vue.use(VueFullPage)
 
 Vue.config.productionTip = false
 

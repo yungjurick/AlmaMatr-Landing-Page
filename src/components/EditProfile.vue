@@ -21,14 +21,14 @@
             </b-col>
           </b-form-row>
 
-          <b-form-row style="margin-bottom: 18px;">
+          <b-form-row>
             <!-- <b-col>
               <b-img thumbnail fluid :src="currentUser.imageUrl" alt="Thumbnail" />
             </b-col> -->
             <b-col style="text-align: center;">
               <image-input v-model="form.avatar">
-                <div slot="activator">
-                  <b-img v-if="!form.avatar" thumbnail fluid :src="require('../assets/add-image.png')" alt="Thumbnail" />
+                <div class="" slot="activator">
+                  <b-img v-if="!form.avatar" thumbnail fluid :src="currentUser.imageUrl" alt="Thumbnail" />
                   <b-img v-else thumbnail fluid :src="form.avatar.imageURL" alt="avatar" />
                 </div>
               </image-input>
@@ -36,6 +36,12 @@
             <!-- <b-col>
               <b-img thumbnail fluid :src="require('../assets/add-image.png')" alt="Thumbnail" />
             </b-col> -->
+          </b-form-row>
+
+          <b-form-row>
+            <b-col class="display-name">
+              {{ currentUser.name }}
+            </b-col>
           </b-form-row>
 
           <b-form-group required label="School and Graduating Class"
@@ -64,7 +70,6 @@
                         description="To help find other university members in the same location.">
             <b-form-input id="userLocation"
                           type="text"
-                          v-model="form.location"
                           ref="autocomplete"
                           placeholder="Enter city name">
             </b-form-input>
@@ -112,13 +117,15 @@ export default {
 
     this.autocomplete.addListener('place_changed', () => {
         let place = this.autocomplete.getPlace();
-        let ac = place.address_components;
-        let lat = place.geometry.location.lat();
-        let lon = place.geometry.location.lng();
-        let city = ac[0]["short_name"];
-        console.log(place)
-        this.form.location = city;
-        console.log(`The user picked ${city} with the coordinates ${lat}, ${lon}`);
+        //let ac = place.address_components;
+        //let lat = place.geometry.location.lat();
+        //let lon = place.geometry.location.lng();
+        //let city = ac[0]["short_name"];
+        
+        this.form.location = place;
+
+        //console.log(place)
+        //console.log(`The user picked ${city} with the coordinates ${lat}, ${lon}`);
     });
   },
   data () {
@@ -135,7 +142,6 @@ export default {
           { text: 'Select Class', value: null },
           '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021'
         ],
-      googlePlacesSetup: false,
       showModal: true,
       error: null
     }
@@ -165,56 +171,72 @@ export default {
       evt.preventDefault();
       // Validate and submit form
       this.validateForm();
-      //this.handleSubmit();
-
-      this.$store.commit('setLoading', true)
-      setTimeout(() => {
-        this.$store.commit('setLoading', false)
-        this.error = null
-      }, 500)
+      this.handleSubmit();
 
     },
     validateForm() {
 
     },
     handleSubmit () {
+      this.$store.commit('setLoading', true);
 
       let userRef = database.database().ref('users/' + this.currentUser.id);
-      let imgUrl = this.currentUser.imageUrl;
+
+      //console.log(this.currentUser);
+      //let addressComponents = this.form.location.address_components;
+      //let city = addressComponents[0]["short_name"];
+      //let vicinity = this.form.vicinity;
+      //let locationRef = database.database().ref('locations/' + (vicinity != null || vicinity != undefined) ? vicinity : city);
+
+      let user = {
+        ...this.currentUser,
+        vocation: this.form.vocation,
+        university: this.form.university,
+        class: this.form.gradClass,
+        city: this.form.location,
+        bio: this.form.bio
+      };
 
       if (this.form.avatar) {
-        let imagePathReference = database.storage().ref("user-images/" + this.currentUser.id + "/image.jpg");
+        userRef.update(user)
+        .then(() => {
+          const imgFile = this.form.avatar.formData.get('file');
+          const fileName = imgFile.name;
+          const ext = fileName.slice(fileName.lastIndexOf('.'));
 
-        let imgFile = this.form.avatar.formData.get('file');
-        
-        imagePathReference.put(imgFile).then(function(snapshot) {
-          console.log(snapshot);
-          console.log('Image upload successful!');
-          // Add image download url to user object
-          imagePathReference.getDownloadURL().then(function(url){
-            console.log(url);
-            imgUrl = url;
-          }, (error) => {
-            //loader.hide();
-            alert(error);
-          });
-
-        }, (error) => {
-          //loader.hide();
-          alert(error);
-          return;
+          let imagePathReference = database.storage().ref('user-images/' + this.currentUser.id + '/01' + ext);
+          return imagePathReference.put(imgFile);
+        })
+        .then(snapshot => {
+          return snapshot.ref.getDownloadURL();
+        })
+        .then(url => {
+          user.imageUrl = url;
+          return userRef.update({ imageUrl: url });
+        })
+        .then(() => {
+          this.$store.dispatch('setUser', user);
+          this.$store.commit('setLoading', false);
+          this.$store.dispatch('setEditProfile', false);
+        })
+        .catch(error => {
+          console.log(error);
+          this.$store.commit('setLoading', false);
+        })
+      } else {
+        userRef.update(user)
+        .then(() => {
+          this.$store.dispatch('setUser', user);
+          this.$store.commit('setLoading', false);
+          this.$store.dispatch('setEditProfile', false);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$store.commit('setLoading', false);
         });
       }
 
-      userRef.update({
-        vocation: this.form.vocation,
-        schoolAndClass: this.form.schoolAndClass,
-        location: this.form.location,
-        bio: this.form.bio,
-        imageUrl: imgUrl
-      }).then(function() {
-        //loader.hide();
-      });
+      //console.log(user);
       
     },
     clearForm() {
@@ -225,10 +247,14 @@ export default {
       this.form.bio = '';
     },
     hidingModal(evt) {
-      if(this.currentUser.location === null || this.currentUser.location === undefined) {
+      if(this.form.location === null || this.form.location === undefined) {
         evt.preventDefault();
         this.error = "Please enter your current city."
+      } else if (this.$store.getters.loading) {
+        console.log("I am here");
+        evt.preventDefault();
       } else {
+        console.log("I am here :/");
         this.$store.dispatch('setEditProfile', false)
       }
     }
@@ -236,9 +262,20 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../assets/theme.scss';
+
 .img-thumbnail {
   height: 150px;
+  border-radius: 50%;
+  //width: 100%;
+}
+
+.display-name {
+  text-align: center;
+  color: #808080;
+  margin-bottom: 18px;
+  font-family: $font_main;
 }
 
 .form-group.required .col-form-label:after { 
@@ -246,14 +283,13 @@ export default {
    color:red;
 }
 </style>
-
 <!-- 
   Global styles added to make the Google autocomplete input work in the modal
 -->
 <style>
   
 .pac-container {
-  background-color: #FFF;
+  background-color: #fff;
   z-index: 2001;
   position: fixed;
   display: inline-block;

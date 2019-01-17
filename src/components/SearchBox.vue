@@ -10,8 +10,8 @@
       
       <b-form-group id="exampleInputGroup1"
                     label="UNIVERSITY"
-                    label-for="exampleInput1">
-        <b-form-input id="exampleInput1"
+                    label-for="university">
+        <b-form-input id="university"
                       type="text"
                       v-model="form.university"
                       required
@@ -21,8 +21,8 @@
 
       <b-form-group id="exampleInputGroup2"
                     label="CITY"
-                    label-for="exampleInput2">
-        <b-form-input id="exampleInput2"
+                    label-for="location">
+        <b-form-input id="location"
                       ref="autocomplete"
                       type="text"
                       v-model="form.city"
@@ -33,17 +33,17 @@
 
       <b-form-group id="exampleInputGroup3"
                     label="FILTER"
-                    label-for="exampleInput3">
+                    label-for="searchFilter">
         <b-form-row no-gutters>
           <b-col>
-            <b-form-select id="exampleInput3"
+            <b-form-select id="searchFilter"
                           :options="gradType"
                           required
                           v-model="form.gradType">
             </b-form-select>
           </b-col>
           <b-col>
-            <b-form-select id="exampleInput3"
+            <b-form-select id="searchFilter"
                           :options="gradClass"
                           required
                           v-model="form.gradClass">
@@ -75,7 +75,7 @@
         let lat = place.geometry.location.lat();
         let lon = place.geometry.location.lng();
         let city = ac[0]["short_name"];
-        
+        console.log(place);
         console.log(`The user picked ${city} with the coordinates ${lat}, ${lon}`);
       });
     },
