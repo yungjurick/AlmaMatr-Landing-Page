@@ -4,7 +4,7 @@
 
       <b-form-row style="margin-bottom: 18px;">
         <b-col class="form-heading">
-          Find university students in your city.
+          Find university members in your city.
         </b-col>
       </b-form-row>
       
@@ -135,7 +135,7 @@
     font-weight: 400;
     line-height: 36px;
     width: 350px;
-    text-align: justify;
+    //text-align: justify;
   }
 
   .col-form-label {

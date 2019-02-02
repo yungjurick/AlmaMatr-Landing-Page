@@ -20,9 +20,32 @@
       Second section ...
     </div>
   </full-page> -->
-
-  <section class="main-view">
+  <div>
     <div class="bg-image" />
+    <ToolBar />
+
+    <h1 class="heading">Turn your university network into community</h1>
+
+    <b-container>
+      <b-row>
+        <div style="width: 400px;">
+          <SearchBox />
+        </div>
+      </b-row>
+    </b-container>
+  </div>
+      <!-- <b-container fluid>
+        <b-row>
+          <b-col md="2">
+            <SidePanel />
+          </b-col>
+          <b-col>
+            CONTENT HERE
+          </b-col>
+        </b-row>
+      </b-container> -->
+
+<!--     <div class="bg-image" />
     <ToolBar />
 
     <h1 v-if="!currentUser" class="heading">Turn your university network into community</h1>
@@ -36,15 +59,15 @@
       </b-row>
     </b-container>
 
-    <EditProfile v-if="isEditingProfile" />
+    <EditProfile v-if="isEditingProfile" /> -->
 
-  </section>
 </template>
 
 <script>
 import ToolBar from './ToolBar.vue';
 import SearchBox from './SearchBox.vue';
 import EditProfile from './EditProfile.vue';
+import SidePanel from './SidePanel.vue';
 
 export default {
   name: 'HomePage',
@@ -54,14 +77,15 @@ export default {
     }
   },
   mounted() {
-    if(this.isLoading) {
-      this.loader = this.$loading.show()
-    }
+    // if(this.isLoading) {
+    //   this.loader = this.$loading.show()
+    // }
   },
   components: {
     ToolBar,
     SearchBox,
-    EditProfile
+    EditProfile,
+    SidePanel
   },
   computed: {
     currentUser() {
@@ -75,11 +99,16 @@ export default {
     }
   },
   watch: {
-    isLoading(val) {
-      if(val === false) {
-        this.loader.hide()
-      } else {
-        this.loader = this.$loading.show()
+    // isLoading(val) {
+    //   if(val === false) {
+    //     this.loader.hide()
+    //   } else {
+    //     this.loader = this.$loading.show()
+    //   }
+    // },
+    currentUser(val) {
+      if(val && !val.location) {
+        this.$store.dispatch('setEditProfile', true);
       }
     }
   }
@@ -90,10 +119,6 @@ export default {
 
 @import '../assets/theme.scss';
 
-.main-view {
-  height: 100vh;
-  width: 100vw;
-}
 .bg-image {
     position: absolute;
     background: url('../assets/background.jpg');
@@ -103,15 +128,17 @@ export default {
     background-repeat: no-repeat;
     background-size: cover;
     z-index: -1;
+
+    &:after {
+      content:'\A';
+      position:absolute;
+      width:100%; height:100%;
+      top:0; left:0;
+      background: black;
+      opacity: 0.1989397321428572;
+    }
 }
-.bg-image:after {
-    content:'\A';
-    position:absolute;
-    width:100%; height:100%;
-    top:0; left:0;
-    background: black;
-    opacity: 0.1989397321428572;
-}
+
 .heading {
   color: white;
   font-family: $font_main;

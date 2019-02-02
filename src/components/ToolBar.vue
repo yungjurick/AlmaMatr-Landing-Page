@@ -35,8 +35,8 @@
               <template slot="button-content">
                 <img :src="currentUser.imageUrl" style="width: 35px; height: 35px; border-radius: 50%; border: 1px solid white;">
               </template>
-              <b-dropdown-item @click="toggleProfileEdit" href="#">Profile</b-dropdown-item>
-              <b-dropdown-item @click="logout" href="#">Logout</b-dropdown-item>
+              <b-dropdown-item @click="toggleProfileEdit" href="#">Edit Profile</b-dropdown-item>
+              <b-dropdown-item @click="logout" href="#">Sign out</b-dropdown-item>
             </b-dropdown>
           </b-nav-item>
         </template>

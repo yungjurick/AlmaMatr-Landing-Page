@@ -122,7 +122,11 @@ export default {
         //let lon = place.geometry.location.lng();
         //let city = ac[0]["short_name"];
         
-        this.form.location = place;
+        let addressComponents = place.address_components;
+        let city = addressComponents[0]["short_name"];
+        let location = (!place.vicinity) ? city : place.vicinity;
+
+        this.form.location = location;
 
         //console.log(place)
         //console.log(`The user picked ${city} with the coordinates ${lat}, ${lon}`);
@@ -136,7 +140,7 @@ export default {
         university: null,
         gradClass: null,
         location: null,
-        bio: null
+        bio: null,
       },
       gradClass: [
           { text: 'Select Class', value: null },
@@ -157,7 +161,7 @@ export default {
       return this.$store.getters.editProfile;
     },
     hasError() {
-      return this.error !== null
+      return this.error !== null;
     }
   },
   watch: {
@@ -170,12 +174,20 @@ export default {
       // Prevent modal from closing
       evt.preventDefault();
       // Validate and submit form
-      this.validateForm();
-      this.handleSubmit();
-
+      if (this.validateForm()) {
+        this.error = null;
+        this.handleSubmit();
+      }
     },
     validateForm() {
-
+      for (let key in this.form) {
+        if (key == "avatar") continue;
+        if(!this.form[key]) {
+          console.log(key);
+          return false;
+        }
+      }
+      return true;
     },
     handleSubmit () {
       this.$store.commit('setLoading', true);
@@ -183,17 +195,14 @@ export default {
       let userRef = database.database().ref('users/' + this.currentUser.id);
 
       //console.log(this.currentUser);
-      //let addressComponents = this.form.location.address_components;
-      //let city = addressComponents[0]["short_name"];
-      //let vicinity = this.form.vicinity;
-      //let locationRef = database.database().ref('locations/' + (vicinity != null || vicinity != undefined) ? vicinity : city);
+      //let locationRef = database.database().ref('locations/' + location);
 
       let user = {
         ...this.currentUser,
         vocation: this.form.vocation,
         university: this.form.university,
         class: this.form.gradClass,
-        city: this.form.location,
+        location: this.form.location,
         bio: this.form.bio
       };
 
@@ -241,21 +250,23 @@ export default {
     },
     clearForm() {
       this.form.avatar = null;
-      this.form.vocation = '';
-      this.form.schoolAndClass = '';
-      this.form.location = '';
-      this.form.bio = '';
+      this.form.vocation = this.currentUser.vocation;
+      this.form.university = this.currentUser.university;
+      this.form.gradClass = this.currentUser.class;
+      this.form.location = this.currentUser.location; // Figure out a way to prepopulate google places search bar
+      this.form.bio = this.currentUser.bio;
     },
     hidingModal(evt) {
-      if(this.form.location === null || this.form.location === undefined) {
-        evt.preventDefault();
-        this.error = "Please enter your current city."
-      } else if (this.$store.getters.loading) {
-        console.log("I am here");
+      if (!this.currentUser.location) {
+        this.error = "Please fill in all the required fields."
+      }
+      if (this.$store.getters.loading || this.hasError) {
+        console.log("Prevent modal from closing.");
         evt.preventDefault();
       } else {
-        console.log("I am here :/");
-        this.$store.dispatch('setEditProfile', false)
+        console.log("Modal is closing.");
+        this.$store.dispatch('setEditProfile', false);
+        this.error = null;
       }
     }
   }

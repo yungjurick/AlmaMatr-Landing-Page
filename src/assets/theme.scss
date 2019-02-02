@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Bree+Serif|Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600|Lato:300,400');
 
 // Global Style
-$font_main: 'Bree Serif', serif;
+$font_main: 'Lato', sans-serif;
 $font_secondary: 'Open Sans', sans-serif;
 $primary_font: #414141;
 $primary_color: #50E3C2;
@@ -23,5 +23,43 @@ $unit_width: 100vw / 1200;
 //   font-size: 5px;
 // }
 body {
-  font: 100% $font_main;
+  font: 100% $font_secondary;
+}
+
+.main-view {
+  height: 100vh;
+  width: 100vw;
+}
+
+.main-content__top {
+	position: fixed;
+	top: 0;
+	margin-left: -15px;
+	width: calc(100% - 290px);
+	height: 60px;
+	border-bottom: 1px solid #eee;
+	background: #fff;
+	z-index: 1000;
+}
+
+// .main-content-title {
+// 	font-size: 1.4em;
+// 	margin: 15px 0 15px 15px;
+// 	border-bottom: none;
+// }
+
+.main-content-body {
+	margin-top: 80px;
+}
+
+@media (min-width: 768px) {
+	.main-content {
+		padding-left: 305px;
+	}
+}
+
+@media (max-width: 768px) {
+	.main-content {
+		padding-left: 0;
+	}
 }
