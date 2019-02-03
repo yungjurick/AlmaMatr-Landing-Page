@@ -2,33 +2,45 @@ import firebase from 'firebase';
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import HomePage from './components/HomePage';
-import Home from './components/Home';
-import Meetups from './components/Meetups';
+const routes = [
+  {
+    path: '*',
+    redirect: '/home'
+  },
+  {
+    path: '/',
+    name: 'Main',
+    component: () => import('./views/LandingView')
+  },
+  {
+    path: '/home',
+    component: () => import('./views/HomeView.vue'),
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'Home',
+        component: () => import('./components/HomeContent.vue')
+      }
+    ]
+  }
+];
 
 Vue.use(Router);
 
 const router = new Router({
-  routes: [
-    {
-      path: '*',
-      redirect: '/home'
-    },
-    {
-      path: '/',
-      redirect: '/home'
-    },
-    {
-      path: '/home',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/meetups',
-      name: 'meetups',
-      component: Meetups
-    }
-  ]
+  mode: 'history',
+  routes
 });
+
+// router.beforeEach((to, from, next) => {
+//   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+//   const isAuthenticated = firebase.auth().currentUser;
+//   if (requiresAuth && !isAuthenticated) {
+//     next('/login')
+//   } else {
+//     next()
+//   }
+// })
 
 export default router;

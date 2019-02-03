@@ -1,22 +1,20 @@
 <template>
   <div class="main-content">
     <div class="main-content__top">
-      <h1 class="main-content-title"> University members in {{ this.currentUser.location }} </h1>
+      <h1 class="main-content-title">University members in {{ this.currentUser.location }}</h1>
     </div>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'Home',
   data() {
     return {
       loader: null
-    }
+    };
   },
-  mounted() {
-  },
+  mounted() {},
   components: {},
   computed: {
     currentUser() {
@@ -28,7 +26,7 @@ export default {
   },
   watch: {
     currentUser(val) {
-      if(!val.location) {
+      if (!val.location) {
         this.$store.dispatch('setEditProfile', true);
       }
     }
@@ -37,7 +35,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 @import '../assets/theme.scss';
 
 .heading {
@@ -47,5 +44,4 @@ export default {
   margin-left: 65px;
   margin-bottom: 45px;
 }
-
 </style>

@@ -1,5 +1,5 @@
-import firebase from 'firebase'
-import store from '@/store'
+import firebase from 'firebase';
+import store from '@/store';
 
 // Initialize Firebase
 const config = {
@@ -14,52 +14,51 @@ const config = {
 const database = firebase.initializeApp(config);
 
 database.signIn = async () => {
-	try {
-		store.commit('setLoading', true)
+  try {
+    store.commit('setLoading', true);
 
-		const provider = new firebase.auth.GoogleAuthProvider();
+    const provider = new firebase.auth.GoogleAuthProvider();
 
-		let result = await firebase.auth().signInWithPopup(provider);
-		let firebaseUser = firebase.auth().currentUser
+    let result = await firebase.auth().signInWithPopup(provider);
+    let firebaseUser = firebase.auth().currentUser;
 
-		if (result.additionalUserInfo.isNewUser) {
-			const user = {
-				id: firebaseUser.uid,
-				name: firebaseUser.displayName,
-				email: firebaseUser.email,
-				imageUrl: firebaseUser.photoURL
-			}
-			database.database().ref('users/' + firebaseUser.uid).set(user)
-				.then(() => {
-					store.dispatch('setUser', user)
-					store.commit('setLoading', false)
-					console.log("New User Made!")
-				})
-				.catch((error) => {
-					store.commit('setLoading', false)
-					console.log(error)
-				})
-		}
+    if (result.additionalUserInfo.isNewUser) {
+      const user = {
+        id: firebaseUser.uid,
+        name: firebaseUser.displayName,
+        email: firebaseUser.email,
+        imageUrl: firebaseUser.photoURL
+      };
+      database
+        .database()
+        .ref('users/' + firebaseUser.uid)
+        .set(user)
+        .then(() => {
+          store.dispatch('setUser', user);
+          store.commit('setLoading', false);
+          console.log('New User Made!');
+        })
+        .catch(error => {
+          store.commit('setLoading', false);
+          console.log(error);
+        });
+    }
 
-		return true;
-
-	} catch(error) {
-		store.commit('setLoading', false)
-		return error;
-	}
-}
+    return true;
+  } catch (error) {
+    store.commit('setLoading', false);
+    return error;
+  }
+};
 
 database.signOut = async () => {
-	try {
-		await firebase.auth().signOut();
-
-		store.dispatch('logout');
-
-		return true;
-
-	} catch(error) {
-		return error;
-	}
-}
+  try {
+    await firebase.auth().signOut();
+    store.dispatch('logout');
+    return true;
+  } catch (error) {
+    return error;
+  }
+};
 
 export default database;
