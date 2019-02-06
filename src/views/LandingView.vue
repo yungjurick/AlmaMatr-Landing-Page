@@ -1,24 +1,4 @@
 <template>
-  <!--   <full-page ref="fullpage" :options="options" id="fullpage">
-    <div class="section">
-      <div class="bg-image" />
-      <ToolBar />
-
-      <h1 v-if="!currentUser" class="heading">Turn your university network into community</h1>
-      <h1 v-else class="heading">Welcome, {{ currentUser.name }}!</h1>
-
-      <b-container>
-        <b-row>
-          <div style="width: 400px;">
-            <SearchBox />
-          </div>
-        </b-row>
-      </b-container>
-    </div>
-    <div class="section">
-      Second section ...
-    </div>
-  </full-page>-->
   <section class="landing-container">
     <div class="bg-image"/>
     <tool-bar/>
@@ -26,32 +6,8 @@
     <div class="searchbox-container">
       <SearchBox/>
     </div>
+    <EditProfile v-if="isEditingProfile" />
   </section>
-  <!-- <b-container fluid>
-        <b-row>
-          <b-col md="2">
-            <SidePanel />
-          </b-col>
-          <b-col>
-            CONTENT HERE
-          </b-col>
-        </b-row>
-  </b-container>-->
-  <!--     <div class="bg-image" />
-    <ToolBar />
-
-    <h1 v-if="!currentUser" class="heading">Turn your university network into community</h1>
-    <h1 v-else class="heading">Welcome, {{ currentUser.name }}!</h1>
-
-    <b-container>
-      <b-row>
-        <div style="width: 400px;">
-          <SearchBox />
-        </div>
-      </b-row>
-    </b-container>
-
-  <EditProfile v-if="isEditingProfile" />-->
 </template>
 
 <script>
@@ -69,11 +25,6 @@ export default {
       loader: null
     };
   },
-  mounted() {
-    // if(this.isLoading) {
-    //   this.loader = this.$loading.show()
-    // }
-  },
   components: {
     ToolBar,
     SearchBox,
@@ -83,6 +34,9 @@ export default {
     currentUser() {
       return this.$store.getters.user;
     },
+    currentLocation() {
+      return this.$store.getters.location;
+    },
     isEditingProfile() {
       return this.$store.getters.editProfile;
     },
@@ -91,17 +45,15 @@ export default {
     }
   },
   watch: {
-    // isLoading(val) {
-    //   if(val === false) {
-    //     this.loader.hide()
-    //   } else {
-    //     this.loader = this.$loading.show()
-    //   }
-    // },
     currentUser(val) {
       if (val && !val.location) {
         this.$store.dispatch('setEditProfile', true);
+      } else if(val) {
+        this.$router.push('/home'); 
       }
+    },
+    currentLocation(val) {
+      this.$router.push('/home');
     }
   }
 };

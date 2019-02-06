@@ -18,6 +18,7 @@ database.signIn = async () => {
     store.commit('setLoading', true);
 
     const provider = new firebase.auth.GoogleAuthProvider();
+    //provider.setCustomParameters({ hd: '*' });
 
     let result = await firebase.auth().signInWithPopup(provider);
     let firebaseUser = firebase.auth().currentUser;

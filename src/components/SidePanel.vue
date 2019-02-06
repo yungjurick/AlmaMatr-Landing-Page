@@ -109,7 +109,12 @@
       updateMenu(context) {
         this.contextSection = context;
 
-        this.$router.push(context);
+        if (context === 'home') {
+          this.$router.push('/home');
+        } else {
+          this.$router.push('/home/' + context);
+        }
+        
 
         // if (context === 'home') {
         //   this.$router.push('/');
@@ -172,7 +177,7 @@
     margin-left: -290px;
     overflow-y: auto;
     background: #000;
-    top: 0;
+    // top: 0;
     overflow: hidden;
     transition: all .5s ease;
   }

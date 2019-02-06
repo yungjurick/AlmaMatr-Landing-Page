@@ -1,5 +1,10 @@
 <template>
-  <b-navbar toggleable="md" type="dark" class="nav-background">
+  <b-navbar
+    toggleable="md"
+    type="light"
+    class="nav-background"
+    v-bind:class="{ 'nav-bg-color': currentUser }"
+  >
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
     <b-navbar-brand href="#" class="logo">
       <img src="../assets/logo-title.svg" class="d-inline-block align-top" alt="BV">
@@ -14,7 +19,7 @@
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-auto" style="color: white;">
+      <b-navbar-nav class="ml-auto">
         <b-nav-item right href="#">Home</b-nav-item>
 
         <template v-if="!currentUser">
@@ -26,18 +31,15 @@
         <template v-else>
           <b-nav-item href="#">Inbox</b-nav-item>
           <b-nav-item href="#">Connects</b-nav-item>
-          <b-nav-item href="#" class="profile_image">
+          
             <b-dropdown variant="link" offset="-120" no-caret>
               <template slot="button-content">
-                <img
-                  :src="currentUser.imageUrl"
-                  style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid white;"
-                >
+                <img class="profile_image" :src="currentUser.imageUrl">
               </template>
               <b-dropdown-item @click="toggleProfileEdit" href="#">Edit Profile</b-dropdown-item>
-              <b-dropdown-item @click="Logout" href="#">Sign out</b-dropdown-item>
+              <b-dropdown-item @click="logout" href="#">Sign out</b-dropdown-item>
             </b-dropdown>
-          </b-nav-item>
+          
         </template>
       </b-navbar-nav>
     </b-collapse>
@@ -46,14 +48,13 @@
 
 <script>
 import database from '@/services/database';
-//import store from '@/store'
 
 export default {
   name: 'ToolBar',
   data() {
     return {
       error: ''
-    };
+    }
   },
   computed: {
     currentUser() {
@@ -77,7 +78,9 @@ export default {
 
       setTimeout(() => {
         loader.hide();
+        this.$router.push('/');
       }, 500);
+
     },
     toggleProfileEdit() {
       this.$store.dispatch('setEditProfile', true);
@@ -90,32 +93,46 @@ export default {
 @import '../assets/theme.scss';
 
 .logo {
-  padding: 0 46px;
+  padding: 0 45px;
 }
+
+.nav-bg-color {
+  background-color: #bdccdd;
+}
+
 .nav-background {
   border-bottom: 2px solid white;
   font-size: 16px;
-  font-family: $font_secondary;
-  height: 10vh;
+  font-family: $font_toolbar;
+  height: 65px; //10vh;
 
-  .navbar-nav .profile_image a.nav-link {
-    padding: 0;
-  }
+  .navbar-nav {
+    .nav-item {
+      margin-right: 45px;
+      line-height: 65px;
 
-  .navbar-nav .nav-link {
-    color: white;
-  }
+      a.nav-link {
+        color: white;
 
-  .navbar-nav .nav-item a.nav-link {
-    padding-right: 46px;
+        &:hover {
+          color: #808080;
+          transition: all 500ms ease-out;
+        }
+      }
+    }
+
+    div { // Contains the user profile image dropdown button
+      margin-top: 5px;
+      margin-right: 40px;
+
+      .profile_image {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          border: 1px solid white;
+        }
+    }
   }
 }
 
-.navbar-nav .profile_image a.nav-link .dropdown .dropdown-menu {
-  background-color: #000;
-
-  // .dropdown-item{
-  //   color: #fff;
-  // }
-}
 </style>

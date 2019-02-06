@@ -7,12 +7,16 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currentUser: null,
+    currentLocation: null,
     editProfile: false,
     loading: false
   },
   mutations: {
     setCurrentUser(state, payload) {
       state.currentUser = payload;
+    },
+    setCurrentLocation(state, payload) {
+      state.currentLocation = payload;
     },
     setLoading(state, payload) {
       state.loading = payload;
@@ -24,6 +28,9 @@ export default new Vuex.Store({
   actions: {
     setUser({ commit }, payload) {
       commit('setCurrentUser', payload);
+    },
+    setLocation({ commit }, payload) {
+      commit('setCurrentLocation', payload);
     },
     setEditProfile({ commit }, payload) {
       commit('setEditProfile', payload);
@@ -50,6 +57,9 @@ export default new Vuex.Store({
   getters: {
     user(state) {
       return state.currentUser;
+    },
+    location(state) {
+      return state.currentLocation;
     },
     editProfile(state) {
       return state.editProfile;

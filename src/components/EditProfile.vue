@@ -5,7 +5,7 @@
              ok-title="Save"
              ok-variant="danger"
              v-model="showModal"
-             title="Build your profile"
+             title="Edit Profile"
              @ok="handleOk"
              @shown="clearForm"
              @hide="hidingModal">
@@ -225,6 +225,7 @@ export default {
         })
         .then(() => {
           this.$store.dispatch('setUser', user);
+          this.$store.dispatch('setLocation', user.location);
           this.$store.commit('setLoading', false);
           this.$store.dispatch('setEditProfile', false);
         })
@@ -236,6 +237,7 @@ export default {
         userRef.update(user)
         .then(() => {
           this.$store.dispatch('setUser', user);
+          this.$store.dispatch('setLocation', user.location);
           this.$store.commit('setLoading', false);
           this.$store.dispatch('setEditProfile', false);
         })
