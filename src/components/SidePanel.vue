@@ -23,7 +23,7 @@
         @click.prevent="updateMenu('home')"
         :class="highlightSection('home')"
         >
-            <i class="fa fa-home menu__icon" aria-hidden="true"></i>
+            <i class="far fa-home menu__icon" aria-hidden="true"></i>
             Home
         </a>
       </li>
@@ -34,7 +34,7 @@
         @click.prevent="updateMenu('profile')"
         :class="highlightSection('profile')"
         >
-            <i class="fa fa-home menu__icon" aria-hidden="true"></i>
+            <i class="fas fa-home menu__icon" aria-hidden="true"></i>
             Profile
         </a>
       </li>
@@ -45,9 +45,8 @@
         @click.prevent="updateMenu('inbox')"
         :class="highlightSection('inbox')"
         >
-          <i class="fa fa-users menu__icon" aria-hidden="true"></i>
+          <i class="fas fa-users menu__icon" aria-hidden="true"></i>
           Inbox
-          <i class="fa fa-chevron-right menu__arrow-icon" aria-hidden="true"></i>
         </a>
       </li>
 
@@ -57,9 +56,8 @@
         @click.prevent="updateMenu('network')"
         :class="highlightSection('network')"
         >
-          <i class="fa fa-tag menu__icon" aria-hidden="true"></i>
+          <i class="fas fa-tag menu__icon" aria-hidden="true"></i>
           Network
-          <i class="fa fa-chevron-right menu__arrow-icon" aria-hidden="true"></i>
         </a>
       </li>
 
@@ -69,9 +67,8 @@
         @click.prevent="updateMenu('meetups')"
         :class="highlightSection('meetups')"
         >
-          <i class="fa fa-user menu__icon" aria-hidden="true"></i>
+          <i class="fas fa-user menu__icon" aria-hidden="true"></i>
           Meet Up Events
-          <i class="fa fa-chevron-right menu__arrow-icon" aria-hidden="true"></i>
         </a>
       </li>
 
@@ -191,7 +188,7 @@
     background-repeat: no-repeat;
     background-size: cover;
 
-    &:after {
+    &:before {
       content:'\A';
       position:absolute;
       width:100%; height:100%;

@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700|Lato:300,400');
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
-@import url('https://fonts.googleapis.com/css?family=Bree+Serif');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700|Lato:300,400|Montserrat:400,700|Bree+Serif');
 
 // Global Style
 $font_title: 'Bree Serif', serif;
@@ -30,20 +28,13 @@ body {
   font: 100% $font_secondary;
 }
 
-.main-view {
-  height: 100vh;
-  width: 100vw;
-}
-
 .main-content__top {
   position: fixed;
-  // top: 0;
   margin-left: -15px;
   width: calc(100% - 290px);
   height: 60px;
   border-bottom: 1px solid #eee;
   background: #fff;
-  z-index: 1000;
 }
 
 // .main-content-title {
@@ -56,9 +47,14 @@ body {
   margin-top: 80px;
 }
 
+.main-content {
+  position: relative;
+}
+
 @media (min-width: 768px) {
   .main-content {
-    padding-left: 305px;
+    padding-left: 290px;
+    height: calc(100vh - 65px);
   }
 }
 
