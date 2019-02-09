@@ -3,7 +3,8 @@
     toggleable="md"
     type="light"
     class="nav-background"
-    v-bind:class="{ 'nav-bg-color': currentUser }"
+    sticky="true"
+    :class="{ 'nav-bg-color': currentUser }"
   >
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
     <b-navbar-brand href="#" class="logo">
@@ -31,15 +32,14 @@
         <template v-else>
           <b-nav-item href="#">Inbox</b-nav-item>
           <b-nav-item href="#">Connects</b-nav-item>
-          
-            <b-dropdown variant="link" offset="-120" no-caret>
-              <template slot="button-content">
-                <img class="profile_image" :src="currentUser.imageUrl">
-              </template>
-              <b-dropdown-item @click="toggleProfileEdit" href="#">Edit Profile</b-dropdown-item>
-              <b-dropdown-item @click="logout" href="#">Sign out</b-dropdown-item>
-            </b-dropdown>
-          
+
+          <b-dropdown variant="link" offset="-120" no-caret>
+            <template slot="button-content">
+              <img class="profile_image" :src="currentUser.imageUrl">
+            </template>
+            <b-dropdown-item @click="toggleProfileEdit" href="#">Edit Profile</b-dropdown-item>
+            <b-dropdown-item @click="logout" href="#">Sign out</b-dropdown-item>
+          </b-dropdown>
         </template>
       </b-navbar-nav>
     </b-collapse>
@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       error: ''
-    }
+    };
   },
   computed: {
     currentUser() {
@@ -80,7 +80,6 @@ export default {
         loader.hide();
         this.$router.push('/');
       }, 500);
-
     },
     toggleProfileEdit() {
       this.$store.dispatch('setEditProfile', true);
@@ -121,18 +120,18 @@ export default {
       }
     }
 
-    div { // Contains the user profile image dropdown button
+    div {
+      // Contains the user profile image dropdown button
       margin-top: 5px;
       margin-right: 40px;
 
       .profile_image {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          border: 1px solid white;
-        }
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid white;
+      }
     }
   }
 }
-
 </style>

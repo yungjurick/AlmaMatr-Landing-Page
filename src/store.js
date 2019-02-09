@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     currentUser: null,
     currentLocation: null,
+    usersData: null,
     editProfile: false,
     loading: false
   },
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
     setCurrentLocation(state, payload) {
       state.currentLocation = payload;
+    },
+    setUsersData(state, payload) {
+      state.usersData = payload;
     },
     setLoading(state, payload) {
       state.loading = payload;
@@ -52,11 +56,28 @@ export default new Vuex.Store({
     },
     logout({ commit }) {
       commit('setCurrentUser', null);
+    },
+    readUserData({ commit }) {
+      database
+        .database()
+        .ref('users/')
+        .once('value')
+        .then(snapshot => {
+          const users = [];
+          snapshot.forEach(childSnapshot => {
+            const user = childSnapshot.val();
+            users.push(user);
+          });
+          commit('setUsersData', users);
+        });
     }
   },
   getters: {
     user(state) {
       return state.currentUser;
+    },
+    usersData(state) {
+      return state.usersData;
     },
     location(state) {
       return state.currentLocation;

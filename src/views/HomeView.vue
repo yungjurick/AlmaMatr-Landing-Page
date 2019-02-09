@@ -1,8 +1,10 @@
 <template>
   <section>
-  	<ToolBar />
-    <SidePanel />
-    <router-view />
+    <ToolBar/>
+    <SidePanel/>
+    <div class="home-content-container">
+      <router-view/>
+    </div>
   </section>
 </template>
 
@@ -17,5 +19,22 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import '../assets/theme.scss';
+.home-content-container {
+  height: auto;
+  width: $main_content_width;
+}
+@media (min-width: 768px) {
+  .home-content-container {
+    margin-left: 290px;
+    height: calc(100vh - 65px);
+  }
+}
+@media (max-width: 768px) {
+  .home-content-container {
+    padding-left: 0;
+  }
+}
 </style>
+

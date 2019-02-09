@@ -16,8 +16,10 @@ const routes = [
     path: '/home',
     component: () => import('./views/HomeView.vue'),
     beforeEnter: (to, from, next) => {
-      if(from.name !== 'Main') { next('/') }
-      next()
+      // if (from.name !== 'Main') {
+      //   next('/');
+      // }
+      next();
     },
     meta: { requiresAuth: true },
     children: [
@@ -30,6 +32,11 @@ const routes = [
         path: 'meetups',
         name: 'Meetups',
         component: () => import('./components/Meetups.vue')
+      },
+      {
+        path: 'profile/:uid',
+        name: 'userProfile',
+        component: () => import('./views/ProfileView.vue')
       }
     ]
   }
@@ -46,10 +53,10 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
   const isAuthenticated = firebase.auth().currentUser;
   if (requiresAuth && !isAuthenticated) {
-    next('/')
+    next('/');
   } else {
-    next()
+    next();
   }
-})
+});
 
 export default router;

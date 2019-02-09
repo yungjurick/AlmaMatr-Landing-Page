@@ -12,6 +12,9 @@ $primary_color: #50e3c2;
 $unit_height: 100vh / 700;
 $unit_width: 100vw / 1200;
 
+$main_content_width: calc(100% - 290px);
+$main_content_margin: 20px 0 0 20px;
+
 /* Initial Style Settings */
 * {
   margin: 0;
@@ -28,38 +31,6 @@ body {
   font: 100% $font_secondary;
 }
 
-.main-content__top {
-  position: fixed;
-  margin-left: -15px;
-  width: calc(100% - 290px);
-  height: 60px;
-  border-bottom: 1px solid #eee;
-  background: #fff;
-}
-
-// .main-content-title {
-// 	font-size: 1.4em;
-// 	margin: 15px 0 15px 15px;
-// 	border-bottom: none;
-// }
-
 .main-content-body {
   margin-top: 80px;
-}
-
-.main-content {
-  position: relative;
-}
-
-@media (min-width: 768px) {
-  .main-content {
-    padding-left: 290px;
-    height: calc(100vh - 65px);
-  }
-}
-
-@media (max-width: 768px) {
-  .main-content {
-    padding-left: 0;
-  }
 }
