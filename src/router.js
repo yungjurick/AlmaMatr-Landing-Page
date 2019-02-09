@@ -15,12 +15,6 @@ const routes = [
   {
     path: '/home',
     component: () => import('./views/HomeView.vue'),
-    beforeEnter: (to, from, next) => {
-      // if (from.name !== 'Main') {
-      //   next('/');
-      // }
-      next();
-    },
     meta: { requiresAuth: true },
     children: [
       {
