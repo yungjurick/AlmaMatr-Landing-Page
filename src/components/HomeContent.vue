@@ -5,7 +5,7 @@
         University members results for
         <small
           class="main-content-subtitle"
-        >{{ this.currentUser.location }}</small>
+        >{{ currentUser.location }}</small>
       </h1>
     </div>
     <div class="main-content-cards-container">
@@ -29,7 +29,8 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch('readUserData');
+    if(!this.$store.getters.usersData)
+      this.$store.dispatch('readUserData');
   },
   components: {
     profileCard
@@ -78,7 +79,7 @@ export default {
     flex-wrap: wrap;
     margin: 20px;
     .card-container {
-      margin: 0 8px 11px 0;
+      margin: 0 10px 10px 0;
     }
   }
 }

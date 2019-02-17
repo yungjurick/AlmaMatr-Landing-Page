@@ -4,7 +4,7 @@
     <tool-bar/>
     <h1 class="landing-header-title">Turn your university network into community</h1>
     <div class="searchbox-container">
-      <SearchBox/>
+      <SearchBox />
     </div>
     <EditProfile v-if="isEditingProfile" />
   </section>
@@ -16,14 +16,9 @@ import SearchBox from '@/components/SearchBox.vue';
 import EditProfile from '@/components/EditProfile.vue';
 
 export default {
-  name: 'HomePage',
+  name: 'LandingView',
   components: {
     ToolBar
-  },
-  data() {
-    return {
-      loader: null
-    };
   },
   components: {
     ToolBar,
@@ -39,9 +34,6 @@ export default {
     },
     isEditingProfile() {
       return this.$store.getters.editProfile;
-    },
-    isLoading() {
-      return this.$store.getters.loading;
     }
   },
   watch: {
@@ -82,6 +74,7 @@ export default {
     background-repeat: no-repeat;
     background-size: cover;
     z-index: -1;
+    
     &:before {
       content: '\A';
       position: absolute;

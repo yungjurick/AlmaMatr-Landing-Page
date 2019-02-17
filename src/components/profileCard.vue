@@ -1,15 +1,14 @@
 <template>
   <section
     class="card-container"
-    :style="{
-      background:`url('${propData.imageUrl}')`, backgroundSize: 'cover', backgroundPosition: 'center'}"
+    :style="{ background:`url('${propData.imageUrl}')`, backgroundSize: 'cover', backgroundPosition: 'center'}"
   >
     <div class="card-button-container">
       <router-link class="card-button" :to="`/home/profile/${propData.id}`"></router-link>
     </div>
     <div class="card-content">
       <h1 class="card-content-title">{{ propData.name }}</h1>
-      <p class="card-content-subtitle">{{ propData.university}} - {{ propData.class }}</p>
+      <p class="card-content-subtitle">{{ propData.university }} - {{ propData.class }}</p>
     </div>
   </section>
 </template>
@@ -50,7 +49,10 @@ export default {
     }
   }
   .card-content {
-    margin: 0 0 14px 11px;
+    flex: 1 1 100%;
+    background-color: #0000008a;
+    padding: 5px 0 14px 11px;
+    border-radius: 7px;
     font-family: $font_main;
     color: white;
     .card-content-title {

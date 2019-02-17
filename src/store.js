@@ -5,6 +5,7 @@ import database from '@/services/database';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  //strict: true,
   state: {
     currentUser: null,
     currentLocation: null,
@@ -58,6 +59,7 @@ export default new Vuex.Store({
       commit('setCurrentUser', null);
     },
     readUserData({ commit }) {
+      commit('setLoading', true);
       database
         .database()
         .ref('users/')
@@ -69,6 +71,11 @@ export default new Vuex.Store({
             users.push(user);
           });
           commit('setUsersData', users);
+          commit('setLoading', false);
+        })
+        .catch(error => {
+          commit('setLoading', false);
+          console.log(error);
         });
     }
   },

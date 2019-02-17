@@ -3,7 +3,7 @@
     toggleable="md"
     type="light"
     class="nav-background"
-    sticky="true"
+    sticky
     :class="{ 'nav-bg-color': currentUser }"
   >
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
@@ -32,7 +32,6 @@
         <template v-else>
           <b-nav-item href="#">Inbox</b-nav-item>
           <b-nav-item href="#">Connects</b-nav-item>
-
           <b-dropdown variant="link" offset="-120" no-caret>
             <template slot="button-content">
               <img class="profile_image" :src="currentUser.imageUrl">
@@ -63,21 +62,21 @@ export default {
   },
   methods: {
     async googleLogin() {
-      let loader = this.$loading.show();
+      this.$store.commit('setLoading', true);
 
       let result = await database.signIn();
       if (result.message) {
         this.error = result.message;
         console.log(this.error);
       }
-      loader.hide();
+      this.$store.commit('setLoading', false);
     },
     async logout() {
-      let loader = this.$loading.show();
+      this.$store.commit('setLoading', true);
       await database.signOut();
 
       setTimeout(() => {
-        loader.hide();
+        this.$store.commit('setLoading', false);
         this.$router.push('/');
       }, 500);
     },

@@ -10,7 +10,7 @@ const routes = [
   {
     path: '/',
     name: 'Main',
-    component: () => import('./views/LandingView')
+    component: () => import('./views/LandingView.vue')
   },
   {
     path: '/home',
@@ -21,6 +21,11 @@ const routes = [
         path: '',
         name: 'Home',
         component: () => import('./components/HomeContent.vue')
+      },
+      {
+        path: 'network',
+        name: 'Network',
+        component: () => import('./components/Network/Network.vue')
       },
       {
         path: 'meetups',

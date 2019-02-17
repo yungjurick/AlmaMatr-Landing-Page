@@ -5,17 +5,31 @@
     <div class="home-content-container">
       <router-view/>
     </div>
+    <EditProfile v-if="isEditingProfile" />
   </section>
 </template>
 
 <script>
 import SidePanel from '@/components/SidePanel.vue';
 import ToolBar from '@/components/ToolBar.vue';
+import EditProfile from '@/components/EditProfile.vue';
+
 export default {
   components: {
     SidePanel,
-    ToolBar
-  }
+    ToolBar,
+    EditProfile
+  },
+  data() {
+    return {};
+  },
+  mounted() {},
+  computed: {
+  	isEditingProfile() {
+  		return this.$store.getters.editProfile;
+    }
+  },
+  watch: {}
 };
 </script>
 

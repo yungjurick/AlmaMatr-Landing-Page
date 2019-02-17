@@ -28,6 +28,7 @@ export default {
     isLoading(val) {
       if (val === false) {
         this.loader.hide();
+        this.loader = null;
       } else {
         this.loader = this.$loading.show();
       }
