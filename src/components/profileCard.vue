@@ -1,7 +1,7 @@
 <template>
   <section
     class="card-container"
-    :style="{ background:`url('${propData.imageUrl}')`, backgroundSize: 'cover', backgroundPosition: 'center'}"
+    :style="{ backgroundImage:`url('${propData.imageUrl}')`, backgroundSize: 'cover', backgroundPosition: 'center'}"
   >
     <div class="card-button-container">
       <router-link class="card-button" :to="`/home/profile/${propData.id}`"></router-link>
@@ -28,7 +28,6 @@ export default {
 .card-container {
   display: flex;
   flex-wrap: wrap;
-  background-size: contain;
   align-items: flex-end;
   width: 165px;
   height: 238px;

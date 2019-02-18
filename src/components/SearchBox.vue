@@ -7,7 +7,6 @@
         <input
           required
           type="text"
-          ref="autocomplete"
           id="university"
           v-model="form.university"
           placeholder="New York University Abu Dhabi"
@@ -43,56 +42,6 @@
         <button type="submit" form="searchbox" value="submit" class="searchbox-form-button">Search</button>
       </form>
     </div>
-    <!-- <div class="search-form-container">
-      <b-form class="search-form" @submit="onSubmit">
-        <b-form-row style="margin-bottom: 18px;">
-          <b-col class="form-heading">Find university members in your city.</b-col>
-        </b-form-row>
-
-        <b-form-group id="exampleInputGroup1" label="UNIVERSITY" label-for="university">
-          <b-form-input
-            id="university"
-            type="text"
-            v-model="form.university"
-            required
-            placeholder="New York University Abu Dhabi"
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group id="exampleInputGroup2" label="CITY" label-for="location">
-          <b-form-input
-            id="location"
-            ref="autocomplete"
-            type="text"
-            v-model="form.city"
-            required
-            placeholder="London"
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group id="exampleInputGroup3" label="FILTER" label-for="searchFilter">
-          <b-form-row no-gutters>
-            <b-col>
-              <b-form-select id="searchFilter" :options="gradType" required v-model="form.gradType"></b-form-select>
-            </b-col>
-            <b-col>
-              <b-form-select
-                id="searchFilter"
-                :options="gradClass"
-                required
-                v-model="form.gradClass"
-              ></b-form-select>
-            </b-col>
-          </b-form-row>
-        </b-form-group>
-
-        <b-row style="text-align: right;">
-          <b-col>
-            <b-button type="submit" variant="danger">Search</b-button>
-          </b-col>
-        </b-row>
-      </b-form>
-    </div>-->
   </section>
 </template>
 
@@ -101,7 +50,7 @@ export default {
   name: 'SearchBox',
   mounted() {
     this.autocomplete = new google.maps.places.Autocomplete(
-      this.$refs.autocomplete.$refs.input,
+      this.$refs.autocomplete,
       { types: ['geocode'] }
     );
 
@@ -219,30 +168,4 @@ export default {
   }
 }
 
-/* .search-form-container {
-  background-color: white;
-  height: 65vh;
-  padding: 24px;
-  border-radius: 10px;
-  border: 1px solid #979797;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
-
-  .form-heading {
-    color: #484848;
-    font-family: $font_secondary;
-    font-size: 30px;
-    font-weight: 400;
-    line-height: 38px;
-    width: 350px;
-    //text-align: justify;
-  }
-  .col-form-label {
-    color: #414141;
-    font-family: $font_secondary;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 38px;
-    text-align: justify;
-  }
-} */
 </style>

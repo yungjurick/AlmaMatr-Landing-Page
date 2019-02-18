@@ -1,7 +1,11 @@
 <template>
 	<div class="main-form-container">
 	    <form id="" class="" method="post" v-on:submit.prevent="onSearch">
-	    	<input type="text" class="main-input main-name" name="NAME"  placeholder="Enter search term" />
+	    	<input
+	    		v-model="filter"
+	    		type="text"
+	    		class="main-input main-name"
+	    		placeholder="Enter search term" />
 	      	<button v-on:click="toggle = !toggle" type="button" class="main-btn">
 	      		<p class="search-small">SEARCH BY</p>
 	      		<p class="search-large"> {{ searchBy }} </p>
@@ -26,6 +30,7 @@ export default {
 	props: ['searchOptions'],
 	data() {
 		return {
+			filter: '',
 			searchByOptions: [
 				'Name',
 				'Location',
@@ -39,6 +44,7 @@ export default {
 		onSearch() {
 			// Add filtering here
 			console.log("Start searching");
+
 		},
 		updateSearchBy(option) {
 			this.searchBy = option;
