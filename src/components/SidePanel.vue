@@ -17,7 +17,7 @@
       </li>
 
       <li>
-        <a href="#" @click.prevent="updateMenu('profile')" :class="highlightSection('profile')">
+        <a href="#" @click.prevent="updateMenu(`profile/${currentUser.id}`)" :class="highlightSection('profile')">
           <i class="fas fa-home menu__icon" aria-hidden="true"></i>
           Profile
         </a>
@@ -64,7 +64,7 @@ export default {
   },
   computed: {
     currentUser() {
-      return this.$store.getters.user;
+      return this.$store.state.currentUser;
     }
   },
   methods: {

@@ -10,6 +10,7 @@ export default new Vuex.Store({
     currentUser: null,
     currentLocation: null,
     usersData: null,
+    userData: null,
     editProfile: false,
     loading: false
   },
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     },
     setCurrentLocation(state, payload) {
       state.currentLocation = payload;
+    },
+    setUserData(state, payload) {
+      state.userData = payload;
     },
     setUsersData(state, payload) {
       state.usersData = payload;
@@ -57,6 +61,22 @@ export default new Vuex.Store({
     },
     logout({ commit }) {
       commit('setCurrentUser', null);
+    },
+    readUserByUID({ commit }, reference) {
+      commit('setLoading', true);
+      database
+        .database()
+        .ref(`users/${reference}`)
+        .once('value')
+        .then(snapshot => {
+          const user = snapshot.val();
+          commit('setUserData', user);
+          commit('setLoading', false);
+        })
+        .catch(error => {
+          commit('setLoading', false);
+          console.log(error);
+        });
     },
     readUserData({ commit }) {
       commit('setLoading', true);

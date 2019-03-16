@@ -29,7 +29,7 @@ export default {
     };
   },
   mounted() {
-    if(!this.$store.getters.usersData)
+    if(!this.$store.getters.usersData) 
       this.$store.dispatch('readUserData');
   },
   components: {
