@@ -2,10 +2,12 @@
   <div class="main-content-container">
     <div class="main-content__top">
       <h1 class="main-content-title">
-        University members results for
+        Other university members in
         <small
           class="main-content-subtitle"
-        >{{ currentUser.location }}</small>
+        >
+        {{ location }}
+        </small>
       </h1>
     </div>
     <div class="main-content-cards-container">
@@ -25,12 +27,18 @@ export default {
   name: 'Home',
   data() {
     return {
-      loader: null
+      loader: null,
+      location: null
     };
+  },
+  created() {
+    if(this.currentUser) {
+      this.location = `${this.currentUser.city}, ${this.currentUser.country}`;
+    }
   },
   mounted() {
     if(!this.$store.getters.usersData) 
-      this.$store.dispatch('readUserData');
+      this.$store.dispatch('readUserData', `${this.currentUser.country}/${this.currentUser.city}`);
   },
   components: {
     profileCard
@@ -48,8 +56,9 @@ export default {
   },
   watch: {
     currentUser(val) {
-      if (!val.location) {
-        this.$store.dispatch('setEditProfile', true);
+      // For page refresh
+      if(val) {
+        this.location = `${val.city}, ${val.country}`;
       }
     }
   }

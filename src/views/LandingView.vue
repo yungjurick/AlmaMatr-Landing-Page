@@ -6,7 +6,7 @@
     <div class="searchbox-container">
       <SearchBox />
     </div>
-    <EditProfile v-if="isEditingProfile" />
+    <!-- <EditProfile v-if="isEditingProfile" /> -->
   </section>
 </template>
 
@@ -38,14 +38,9 @@ export default {
   },
   watch: {
     currentUser(val) {
-      if (val && !val.location) {
-        this.$store.dispatch('setEditProfile', true);
-      } else if(val) {
-        this.$router.push('/home'); 
+      if(val) {
+        this.$router.push('/home');
       }
-    },
-    currentLocation(val) {
-      this.$router.push('/home');
     }
   }
 };

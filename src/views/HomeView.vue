@@ -1,11 +1,14 @@
 <template>
   <section>
-    <ToolBar/>
-    <SidePanel/>
+    <ToolBar />
+    <SidePanel v-if="enableFeatures" />
     <div class="home-content-container">
-      <router-view/>
+      <ProfileEdit v-if="isEditingProfile" />
+      <router-view v-if="enableFeatures" />
+      <!-- <ProfileEdit v-if="showModal" @close="showModal = false" /> -->
     </div>
-    <EditProfile v-if="isEditingProfile" />
+    <!-- <EditProfile v-if="isEditingProfile" /> -->
+    
   </section>
 </template>
 
@@ -13,23 +16,49 @@
 import SidePanel from '@/components/SidePanel.vue';
 import ToolBar from '@/components/ToolBar.vue';
 import EditProfile from '@/components/EditProfile.vue';
+import ProfileEdit from '@/components/ProfileEdit.vue';
 
 export default {
   components: {
     SidePanel,
     ToolBar,
-    EditProfile
+    EditProfile,
+    ProfileEdit
   },
   data() {
-    return {};
+    return {
+      showModal: false,
+      enableFeatures: false
+    };
+  },
+  created() {
+    if (this.currentUser) {
+      if (!this.currentUser.class || !this.currentUser.country) {
+        this.$store.dispatch('setEditProfile', true);
+      } else {
+        this.enableFeatures = true;
+      }
+    }
+    //this.enableFeatures = (this.currentUser) ? (this.currentUser.class !== null) : false;
   },
   mounted() {},
   computed: {
+    currentUser() {
+      return this.$store.getters.user;
+    },
   	isEditingProfile() {
   		return this.$store.getters.editProfile;
     }
   },
-  watch: {}
+  watch: {
+    currentUser(val) {
+      if(val && (!val.class || !val.country)) {
+        this.$store.dispatch('setEditProfile', true);
+      } else {
+        this.enableFeatures = true;
+      }
+    }
+  }
 };
 </script>
 

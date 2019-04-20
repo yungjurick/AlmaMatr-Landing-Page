@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Vuelidate from 'vuelidate';
 import firebase from 'firebase';
 import App from './App.vue';
 import router from './router';
@@ -12,6 +13,10 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 //import './fullpage.scrollHorizontally.min' // Optional. When using fullpage extensions
 //import VueFullPage from 'vue-fullpage.js'
 
+// Global styles shared by all components
+require('./assets/theme.scss');
+
+Vue.use(Vuelidate);
 Vue.use(BootstrapVue);
 Vue.use(Loading, {
   loader: 'dots',

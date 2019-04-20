@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import store from '@/store';
+import axios from 'axios';
 
 // Initialize Firebase
 const config = {
@@ -24,11 +25,15 @@ database.signIn = async () => {
     let firebaseUser = firebase.auth().currentUser;
 
     if (result.additionalUserInfo.isNewUser) {
+      // let location = await axios.get('http://ip-api.com/json/');
+
       const user = {
         id: firebaseUser.uid,
         name: firebaseUser.displayName,
         email: firebaseUser.email,
         imageUrl: firebaseUser.photoURL
+        // city: location.data.city,
+        // country: location.data.country
       };
       database
         .database()

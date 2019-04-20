@@ -11,13 +11,13 @@
 
       <li>
         <a href="#" @click.prevent="updateMenu('home')" :class="highlightSection('home')">
-          <i class="far fa-home menu__icon" aria-hidden="true"></i>
+          <i class="fas fa-home menu__icon" aria-hidden="true"></i>
           Home
         </a>
       </li>
 
       <li>
-        <a href="#" @click.prevent="updateMenu(`profile/${currentUser.id}`)" :class="highlightSection('profile')">
+        <a href="#" @click.prevent="updateMenu('profile')" :class="highlightSection('profile')">
           <i class="fas fa-home menu__icon" aria-hidden="true"></i>
           Profile
         </a>
@@ -25,21 +25,21 @@
 
       <li>
         <a href="#" @click.prevent="updateMenu('inbox')" :class="highlightSection('inbox')">
-          <i class="fas fa-users menu__icon" aria-hidden="true"></i>
+          <i class="fas fa-envelope menu__icon" aria-hidden="true"></i>
           Inbox
         </a>
       </li>
 
       <li>
         <a href="#" @click.prevent="updateMenu('network')" :class="highlightSection('network')">
-          <i class="fas fa-tag menu__icon" aria-hidden="true"></i>
+          <i class="fas fa-users menu__icon" aria-hidden="true"></i>
           Network
         </a>
       </li>
 
       <li>
         <a href="#" @click.prevent="updateMenu('meetups')" :class="highlightSection('meetups')">
-          <i class="fas fa-user menu__icon" aria-hidden="true"></i>
+          <i class="fas fa-calendar-alt menu__icon" aria-hidden="true"></i>
           Meet Up Events
         </a>
       </li>
@@ -73,6 +73,8 @@ export default {
 
       if (context === 'home') {
         this.$router.push('/home');
+      } else if (context === 'profile') {
+        this.$router.push(`/home/${context}/${this.currentUser.id}`);
       } else {
         this.$router.push('/home/' + context);
       }

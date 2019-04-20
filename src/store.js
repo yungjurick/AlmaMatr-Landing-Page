@@ -78,11 +78,11 @@ export default new Vuex.Store({
           console.log(error);
         });
     },
-    readUserData({ commit }) {
+    readUserData({ commit }, locationRef) {
       commit('setLoading', true);
       database
         .database()
-        .ref('users/')
+        .ref(`locations/${locationRef}`)
         .once('value')
         .then(snapshot => {
           const users = [];

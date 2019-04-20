@@ -301,7 +301,7 @@ export default {
 -->
 <style>
   
-.pac-container {
+/*.pac-container {
   background-color: #fff;
   z-index: 2001;
   position: fixed;
@@ -315,13 +315,13 @@ export default {
 
 .modal-backdrop {
   z-index: 1000;
-}
+}*/
 
 /**
 * Vue Loading
 */
-.vld-overlay.is-full-page {
+/*.vld-overlay.is-full-page {
     z-index: 2001 !important;
-}
+}*/
 
 </style>

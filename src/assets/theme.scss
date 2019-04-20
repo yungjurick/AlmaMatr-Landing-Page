@@ -19,9 +19,7 @@ $main_content_margin: 20px 0 0 20px;
 * {
   margin: 0;
   padding: 0;
-  border: 0;
   font-size: 100%;
-  font: inherit;
   vertical-align: baseline;
 }
 
@@ -31,4 +29,16 @@ body {
 
 .main-content-body {
   margin-top: 80px;
+}
+
+/**
+* Vue Loading
+*/
+.vld-overlay.is-full-page {
+    z-index: 9999 !important;
+}
+
+// Google autocomplete suggestion box
+.pac-container {
+	z-index: 9999 !important;
 }
