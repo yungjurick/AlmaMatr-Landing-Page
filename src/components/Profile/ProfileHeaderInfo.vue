@@ -25,20 +25,22 @@ export default {
       if (this.$props.receivedTitle == 'About') {
         return [
           {
-            title: 'Age',
-            subtitle: this.$props.userData.age || '-'
+            title: 'DOB',
+            subtitle: this.$props.userData.dob || '-'
           },
           {
-            title: 'Nationality',
-            subtitle: this.$props.userData.nationality || '-'
+            title: 'Location',
+            subtitle:
+              `${this.$props.userData.city}, ${this.$props.userData.country}` ||
+              '-'
           },
           {
-            title: 'City',
-            subtitle: this.$props.userData.location || '-'
+            title: 'Company',
+            subtitle: this.$props.userData.company || '-'
           },
           {
             title: 'Position',
-            subtitle: this.$props.userData.vocation || '-'
+            subtitle: this.$props.userData.position || '-'
           },
           {
             title: 'Education',
@@ -51,24 +53,20 @@ export default {
       } else {
         return [
           {
-            title: 'Website',
-            subtitle: this.$props.userData.website || '-'
-          },
-          {
             title: 'LinkedIn',
-            subtitle: this.$props.userData.linkedIn || '-'
+            subtitle: this.$props.userData.social.linkedIn || '-'
           },
           {
             title: 'Facebook',
-            subtitle: this.$props.userData.facebook || '-'
+            subtitle: this.$props.userData.social.facebook || '-'
           },
           {
             title: 'Email',
-            subtitle: this.$props.userData.email || '-'
+            subtitle: this.$props.userData.social.gmail || '-'
           },
           {
             title: 'Instagram',
-            subtitle: this.$props.userData.instagram || '-'
+            subtitle: this.$props.userData.social.instagram || '-'
           }
         ];
       }
