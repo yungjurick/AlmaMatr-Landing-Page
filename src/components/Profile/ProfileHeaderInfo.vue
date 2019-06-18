@@ -22,51 +22,51 @@ export default {
   },
   computed: {
     userInformation() {
-      if (this.$props.receivedTitle == 'About') {
+      if (this.$props.receivedTitle === 'About') {
         return [
           {
-            title: 'DOB',
-            subtitle: this.$props.userData.dob || '-'
+            title: 'DOB:',
+            subtitle: this.$props.userData.dob || '--'
           },
           {
-            title: 'Location',
+            title: 'Location:',
             subtitle:
               `${this.$props.userData.city}, ${this.$props.userData.country}` ||
-              '-'
+              '--'
           },
           {
-            title: 'Company',
-            subtitle: this.$props.userData.company || '-'
+            title: 'Company:',
+            subtitle: this.$props.userData.company || '--'
           },
           {
-            title: 'Position',
-            subtitle: this.$props.userData.position || '-'
+            title: 'Position:',
+            subtitle: this.$props.userData.position || '--'
           },
           {
-            title: 'Education',
+            title: 'Education:',
             subtitle:
               `${this.$props.userData.university}, ${
                 this.$props.userData.class
-              }` || '-'
+              }` || '--'
           }
         ];
       } else {
         return [
           {
-            title: 'LinkedIn',
-            subtitle: this.$props.userData.social.linkedIn || '-'
+            title: 'LinkedIn:',
+            subtitle: (!this.$props.userData.social) ? '--' : this.$props.userData.social.linkedIn
           },
           {
-            title: 'Facebook',
-            subtitle: this.$props.userData.social.facebook || '-'
+            title: 'Facebook:',
+            subtitle: (!this.$props.userData.social) ? '--' : this.$props.userData.social.facebook
           },
           {
-            title: 'Email',
-            subtitle: this.$props.userData.social.gmail || '-'
+            title: 'Email:',
+            subtitle: (!this.$props.userData.social) ? '--' : this.$props.userData.social.gmail
           },
           {
-            title: 'Instagram',
-            subtitle: this.$props.userData.social.instagram || '-'
+            title: 'Instagram:',
+            subtitle: (!this.$props.userData.social) ? '--' : this.$props.userData.social.instagram
           }
         ];
       }
